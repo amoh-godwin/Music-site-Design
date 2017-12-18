@@ -1,0 +1,15 @@
+<!Doctype html>
+<html>
+<script>
+    var array = 'Array ( [3] => Array ( [artist] => jorome [song] => jolomi - Joromi.mp3 [title] => Joromi [play_count] => 0 [download_count] => 0 ) [4] => Array ( [artist] => Simi [song] => Simi - Joromi.mp3 [title] => Joromi [play_count] => 0 [download_count] => 0 ) [5] => Array ( [artist] => Hillsong [song] => Hillsong - Age to Age.mp3 [title] => Age to Age [play_count] => 0 [download_count] => 0 ) ) ';
+
+    var  op_result = array.replace(/Array [(]/g, '{');
+    var cl_result = op_result.replace(/[)]/g, '}');
+    var ar_result = cl_result.replace(/=>/g, ':');
+    var main_arrComma = ar_result.replace(/\s\[/g, ', [');
+    var fixed_e_comma = main_arrComma.replace(/{,/g, '{');
+    var fixed_open_braces = fixed_e_comma.replace(/\[/g, "['");
+    var fixed_closed_braces = fixed_open_braces.replace(/\]/g, "']");
+    alert(fixed_closed_braces);
+</script>
+</html>

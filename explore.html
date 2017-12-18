@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Thank you Heavenly Father</title>
+
+    <link href="../../youthalive/css/w3.css" rel="stylesheet" />
+
+    <link href="../../youthalive/css/responsive.css" rel="stylesheet" />
+
+    <link href="../../youthalive/fa/css/font-awesome.min.css" rel="stylesheet" />
+
+    <style>
+
+        nav {
+            display: flex;
+            align-content: center;
+        }
+
+        nav a {
+            display: block;
+            text-decoration: none;
+            color: orange;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+        }
+
+        aside div a {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 2px;
+            background-color: white;
+            color: black;
+            padding: 4px 8px;
+            margin-left: 4px;
+        }
+
+        aside div a {
+            display: block;
+        }
+
+        aside div a:hover {
+            cursor: pointer;
+            background-color: rgba(255, 255, 254, 0.8);
+            opacity: 0.4;
+        }
+
+        .disable {
+            background-color: rgba(255, 255, 254, 0.8);
+            opacity: 0.4;
+        }
+
+        .disable:hover {
+            cursor: pointer;
+            background-color: rgba(255, 255, 254, 0.8);
+            opacity: 0.4;
+        }
+
+        .text-ellipses {
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        aside div span:hover {
+            cursor: default;
+        }
+
+        footer {
+            display: block;
+        }
+        .play_btn:hover {
+            cursor: pointer;
+            background-color: dodgerblue;
+            color: white;
+        }
+
+        .play_btn:active {
+            background-color: green;
+            color: white;
+        }
+
+        .d_btn {
+            border-radius: 0 4px 4px 0;
+            background-color: dodgerblue;
+            color: white;
+        }
+
+        .d_btn:hover {
+            cursor: pointer;
+        }
+
+        footer {
+            position: fixed;
+            top: 0;
+            align-self: flex-end;
+            width: 100%;
+            height: 50px;
+            display: none;
+            padding: 4px 16px;
+            background-color: black;
+            color: white;
+            opacity: 0.7;
+        }
+
+        #controls {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+
+        #controls div {
+            padding: 0 8px;
+        }
+
+        .load_song {
+            padding: 0 12px;
+        }
+
+        .load_song:hover {
+            cursor: pointer;
+            opacity: .7;
+        }
+
+        .s2 {
+            font-size: 16px;
+        }
+
+        .seek_box {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        #bar {
+            width: 100%;
+            height: 5px;
+            border-radius: 4px;
+            background-color: #8d8d8d;
+            padding: 0px !important;
+        }
+
+        #bar_pro {
+            border-radius: 4px;
+            width: 0%;
+            height: 100%;
+            background-color: dodgerblue;
+            padding: 0px !important;
+        }
+
+        .volume_box {
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        #v_clicker {
+            position: absolute;
+            top: -50%;
+            left: 21px;
+            z-index: 2;
+            width: 12px;
+            height: 12px;
+            border-radius: 24px;
+            box-shadow: 0 0 8px 1px rgba(0,0,0,0.7);
+            background-color: white;
+            padding: 0 4px !important;
+        }
+
+        #v_bar {
+            width: 100%;
+            height: 5px;
+            border-radius: 4px;
+            background-color: #8d8d8d;
+            padding: 0px !important;
+        }
+
+        #v_bar_pro {
+            border-radius: 4px;
+            width: 30%;
+            height: 100%;
+            background-color: dodgerblue;
+            padding: 0px !important;
+        }
+
+        #controls i:hover {
+            color: dodgerblue;
+        }
+
+        #close_btn {
+            /*position: absolute;
+            top: 0;
+            right: 0;*/
+            display: flex;
+            width: 100%;
+        }
+
+        #close_btn i {
+            margin-left: auto;
+            padding: 4px;
+            opacity: 0.8;
+        }
+        #close_btn i {
+            margin-left: auto;
+            padding: 4px;
+            opacity: 0.8;
+        }
+
+        #close_btn i:hover {
+            background-color: red;
+            cursor: pointer;
+        }
+    </style>
+
+    <script src="music_functions.js"></script>
+
+    <script>
+
+        var p_n_o_e = 3;
+
+        document.cookie = 'p_n_o_e='+p_n_o_e;
+
+        var p_prev = 0;
+
+        var p_forw = 0;
+
+        var p_curr = 0;
+
+        var p_total = 2;
+
+        function entry(no) {
+
+            if(no > 0) {
+
+                var start = (no - 1) * p_n_o_e;
+
+                var out = '';
+
+                var ajax = new XMLHttpRequest();
+
+                ajax.onreadystatechange = function () {
+
+                    if (this.readyState === 4 && this.status === 200) {
+
+                        // Pagination Variables
+                        p_prev = no - 1;
+                        if (p_prev < 1) {
+                            document.getElementById('p_prev').classList.add('disable');
+                        } else {
+                            document.getElementById('p_prev').classList.remove('disable');
+                        }
+                        p_curr = no;
+                        document.getElementById('p_curr_text').innerText = p_curr.toString();
+                        p_forw = no + 1;
+                        if (p_forw > p_total) {
+                            p_forw = -1;
+                            document.getElementById('p_forw').classList.add('disable');
+                        } else {
+                            document.getElementById('p_forw').classList.remove('disable');
+                        }
+
+                        // The Response
+                        var resp = JSON.parse(this.responseText);
+
+                        for (var x = 0; x < resp.length; x++) {
+                            out += '<div class="quarter w3-padding-large">' +
+                                '<form method="post" action="download.php" style="width: 100%;">' +
+
+                                '<div class="w3-card-4" style="height: auto;">' +
+
+                                '<meta name="keywords" content="' + resp[x].tags + '"/>' +
+
+                                '<div style="width: 100%; height: 200px;">' +
+                                '<img src="../images/21568704_895447720606432_3201380884846477312_n.jpg" width="100%" height="100%" style="" />' +
+                                '</div>' +
+
+                                '<div style=" height: 100px; overflow: hidden;">' +
+
+                                '<div class="w3-padding-small" style="display: flex; flex-wrap: wrap; width: 100%;">' +
+                                '<h5 class="w3-padding-0 w3-margin-0 w3-text-indigo text-ellipses" style="width: 100%;"><b>' + resp[x].artist + '</b></h5>' +
+                                '<h5 class="w3-padding-0 w3-margin-0 w3-text-gray text-ellipses">' + resp[x].title + '</h5>' +
+                                '</div>' +
+
+                                '<ul class="w3-padding-small w3-margin-0" style="display: flex; flex-wrap: wrap; width: 100%; justify-content: center; align-items: center;">' +
+
+                                '<li class="w3-text-green load_song"  onclick="loadSong(\'' + resp[x].song + '\', this.firstElementChild); playCounter(' + resp[x].id + ')"><i class="fa fa-play"></i></li>' +
+                                '<li class="w3-green" onclick="setTimeout(\'downCounter(' + resp[x].id + ')\', 200)"><input type="submit" value="Download" class="w3-green w3-btn" /></li>' +
+                                '<li class="w3-text-green w3-padding-tiny"><i class="fa fa-headphones w3-padding-tiny w3-text-black"></i><span id="playC_' + resp[x].id + '">' + resp[x].play_count + '</span></li>' +
+                                '<li class="w3-text-green"><i class="fa fa-download w3-padding-tiny w3-text-black"></i><span id="downC_' + resp[x].id + '">' + resp[x].download_count + '</span></li>' +
+
+                                '</ul>' +
+
+                                '<input type="hidden" value="' + resp[x].song + '" name="song_name" />' +
+
+                                '</div>' +
+
+                                '</div>' +
+
+                                '</form>' +
+
+                                '</div>';
+                        }
+
+                        container.innerHTML = out;
+                    }
+
+                };
+
+                ajax.open("GET", 'explore_backend.php?start=' + start, true);
+
+                ajax.send();
+
+            } else {}
+        }
+
+        function playCounter(id) {
+
+            var ajx = new XMLHttpRequest();
+
+            ajx.onreadystatechange = function() {
+                if(ajx.readyState === 4 && ajx.status === 200) {
+                    var response = ajx.responseText;
+                    var splits = response.split('|');
+                    if(splits[1] !== 0) {
+                        var ele_id = 'playC_' + id;
+                        var ele = document.getElementById(ele_id);
+                        ele.innerText = splits[0];
+                    }
+                }
+            };
+
+            ajx.open('GET', 'increment_play.php?uid='+id, true);
+            ajx.send();
+
+        }
+
+        function downCounter(id) {
+
+
+            var ajaxx = new XMLHttpRequest();
+
+            ajaxx.onreadystatechange = function() {
+
+                if(ajaxx.readyState === 4 && ajaxx.status === 200) {
+                    var response = ajaxx.responseText;
+                    var splits = response.split('|');
+                    if(splits[1] !== 0) {
+                        var ele_id = 'downC_' + id;
+                        var ele = document.getElementById(ele_id);
+                        ele.innerHTML = splits[0];
+                    }
+
+                }
+
+            };
+
+            ajaxx.open('GET', 'increment_download.php?uid='+id, true);
+            ajaxx.send();
+        }
+
+    </script>
+
+</head>
+
+<body onload="entry(1)">
+
+<footer>
+
+    <div id="close_btn"><i class="fa fa-close" onclick="hidePlayer()"></i></div>
+
+    <div id="controls">
+
+        <div><i class="fa fa-play" id="control_play" onclick="playSong(this, event)"></i></div>
+
+        <div class="seek_box" style="width: 100%;">
+            <div id="bar" onclick="seek(this, event)" n><div id="bar_pro"></div></div>
+        </div>
+
+        <div style="display: flex; flex-wrap: nowrap"><div id="curr_time">0:00</div> / <div id="duration">0:00</div></div>
+
+        <div>
+            <i class="fa fa-volume-up s2" onclick="muteSong(this, event)"></i>
+        </div>
+
+        <div class="volume_box" style="width: 100px;">
+            <div id="v_clicker"></div>
+            <div id="v_bar" onclick="volumeChange(this, this.firstElementChild, event)">
+                <div id="v_bar_pro"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <audio id="audio">
+        <source src="contents/Simi%20-%20Joromi.mp3" type="audio/mpeg">
+    </audio>
+
+</footer>
+
+<advertisement class="w3-deep-purple" style="display: flex; height: 250px; justify-content: center; align-items: center;">
+    <h4>Welcome, To the Home of Music</h4>
+</advertisement>
+
+<main class="full" style="">
+
+    <article id="container" class="w3-padding-large full w3-white" style="display: flex; flex-wrap: wrap;">
+
+    </article>
+
+    <aside class="w3-padding-large full" style="display: flex; justify-content: center;">
+
+        <div><a onclick="entry(p_prev)" id="p_prev"><i class="fa fa-angle-double-left"></i></a></div>
+
+        <div><a id="p_curr"><span style="padding: 4px;" id="p_curr_text"></span></a></div>
+
+        <div><a onclick="entry(p_forw)" id="p_forw"><i class="fa fa-angle-double-right"></i></a></div>
+
+    </aside>
+
+</main>
+
+<nav class="w3-black full" style="height: 50px;">
+
+    <ul class="w3-margin-0 navbar">
+
+        <li><a href="">Sept</a></li>
+        <li class="" style="margin-left: auto;"><a href="upload.html">Upload</a></li>
+        <li class=""><a href="login.html">Sign in</a></li>
+
+    </ul>
+
+</nav>
+
+</body>
+
+<script src="../biggerThan.js"></script>
+
+</html>

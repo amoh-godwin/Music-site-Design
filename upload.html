@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload </title>
+    <link href="../../youthalive/css/w3.css" rel="stylesheet" />
+    <link href="../../youthalive/css/responsive.css" rel="stylesheet" />
+    <link href="../../youthalive/fa/css/font-awesome.min.css" rel="stylesheet" />
+    <style>
+        body, html {
+            height: 100%;
+            align-items: center;
+        }
+        label {
+            display: block;
+        }
+        .button {
+            position: relative;
+            width: 150px;
+            height: 50px;
+        }
+
+        .button input {
+            position: absolute;
+            top: 0;
+            width:150px;
+            height: 50px;
+            z-index: 1;
+            opacity: 0;
+        }
+
+        .button:nth-child(2) {
+            position: absolute;
+            top: 0;
+            width: 150px;
+            height: 50px;
+        }
+    </style>
+    <script src="music_functions.js"></script>
+</head>
+<body style="display: flex; flex-wrap: wrap; justify-content: center;">
+    <div id="uploader" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; width: 100%;"><div class="half w3-border w3-round w3-padding-32" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+        <div class="button">
+            <input type="file" onchange="upload(event)" id="fileToUpload" style="width: 100%; height: 100%; overflow: hidden;" class="" />
+            <div class="w3-btn w3-border w3-white w3-xlarge w3-text-blue">
+                <i class="fa fa-upload"></i> Upload</div>
+        </div>
+    </div></div>
+    <div id="spin" class="full w3-padding-xlarge" style="display: none; flex-wrap: wrap; justify-content: center;">
+        <div>
+            <i class="fa fa-spin fa-spinner fa-2x"></i>
+        </div>
+    </div>
+
+    <form id="form" method="post" action="upload_song.php"
+          class="quarter w3-padding-32 w3-border w3-round" style="display: none; flex-wrap: wrap; justify-content: center;">
+        <h4 class="w3-text-blue">Song Information</h4>
+        <div class="w3-padding-large">
+            <label class="w3-label">Song</label>
+            <input type="text" name="song" style="" class="w3-border w3-round w3-input" />
+        </div>
+        <div class="w3-padding-large">
+            <label class="w3-label">Artist</label>
+            <input type="text" name="artist" style="" class="w3-border w3-round w3-input" />
+        </div>
+        <div class="w3-padding-large">
+            <label class="w3-label">Tags</label>
+            <textarea name="tags" style="" class="w3-border w3-round w3-input"></textarea>
+        </div>
+        <input type="hidden" name="base" id="base"/>
+        <input type="hidden" name="format" id="format" />
+        <input type="hidden" name="size" id="size" />
+        <div class="w3-padding-large">
+            <input type="submit" name="submit" style="" value="upload" class="w3-btn w3-teal" />
+        </div>
+    </form>
+
+</body>
+</html>

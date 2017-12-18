@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link href="../../youthalive/css/w3.css" rel="stylesheet" />
+    <link href="../../youthalive/css/responsive.css" rel="stylesheet" />
+    <link href="../../youthalive/fa/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="play_one.css" rel="stylesheet" />
+    <script src="music_functions.js"></script>
+    <script>
+        var found = {};
+
+        function theCall(str) {
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function() {
+                if(ajax.readyState === 4 && ajax.status === 200) {
+                    var resp = ajax.response;
+                    var breaks = resp.split('|');
+                    for(var x = 0; x < breaks.length; x++) {
+                        if(x !== 0) {
+                            var y = x - 1;
+                            var further_broken = breaks[x].split(',');
+                            found[y] = {
+                                'artist' : further_broken[0],
+                                'title' : further_broken[1],
+                                'file' : further_broken[2],
+                                'id' : further_broken[3],
+                                'size' : (further_broken[4] / 1024).toPrecision(2)
+                            };
+
+
+                        }
+                    }
+
+                    // total for found{}
+                    found.total = breaks.length - 1;
+
+                    createList();
+
+                }
+            };
+
+            ajax.open('GET', 'search_backend.php?q='+str, true);
+            ajax.send();
+        }
+
+        function createList() {
+            var art = document.getElementById('article');
+            var out = '';
+            for (var x = 0; x < found.total; x++) {
+                out += '<form method="post" action="download.php"><div style="padding: 8px 16px;"><div class="card"><div>'+ found[x].artist +' - '+ found[x].title+'</div><div style="margin-left: auto;"><div class="info">'+ found[x].size +' mb</div></div> <div><div class="info2">mp3</div></div> <div class="play_btn" onclick="loadSong(\''+ found[x].file +'\', this.firstElementChild); playCounter('+ found[x].id +')"><i class="fa fa-caret-right fa-2x" ></i></div><input type="hidden" value="'+ found[x].file +'" name="song_name" /><div class="d_btn" style="position: relative;" onclick="setTimeout(\'downCounter('+ found[x].id +')\', 200)"> <input type="submit" value="" class="w3-green" style="position: absolute; top: 0; width: 100%; height: 100%; opacity: 0;" /> <i class="fa fa-arrow-down"></i> </div> </div> </div></form>';
+            }
+
+            if(out === '') {
+                out += '<div style="display: flex; justify-content: center;">No Results found&nbsp;<a href="explore.html">Go to Explore&nbsp;</a>and find songs that people are currently downloading</div>';
+            }
+            art.innerHTML = out;
+        }
+
+        function playCounter(id) {
+
+            var ajx = new XMLHttpRequest();
+
+            ajx.onreadystatechange = function() {
+                if(ajx.readyState === 4 && ajx.status === 200) {
+                    var response = ajx.responseText;
+                    var splits = response.split('|');
+                    if(splits[1] !== 0) {
+                        //var ele_id = 'playC_' + id;
+                        //var ele = document.getElementById(ele_id);
+                        //ele.innerText = splits[0];
+                    }
+                }
+            };
+
+            ajx.open('GET', 'increment_play.php?uid='+id, true);
+            ajx.send();
+
+        }
+
+        function downCounter(id) {
+
+
+            var ajaxx = new XMLHttpRequest();
+
+            ajaxx.onreadystatechange = function() {
+
+                if(ajaxx.readyState === 4 && ajaxx.status === 200) {
+                    var response = ajaxx.responseText;
+                    var splits = response.split('|');
+                    if(splits[1] !== 0) {
+                        //var ele_id = 'downC_' + id;
+                        /*var ele = document.getElementById(ele_id);
+                        ele.innerHTML = splits[0];*/
+                    }
+
+                }
+
+            };
+
+            ajaxx.open('GET', 'increment_download.php?uid='+id, true);
+            ajaxx.send();
+        }
+
+    </script>
+</head>
+<body class="w3-light-gray">
+<nav class="w3-black full" style="height: 50px;">
+    <ul class="w3-margin-0 navbar">
+        <li><a href="">Sept</a></li>
+        <li class="" style="margin-left: auto;"><a href="upload.html">Upload</a></li>
+        <li class=""><a href="login.html">Sign in</a></li>
+    </ul>
+</nav>
+<header class="" style="">
+    <div class="search_box">
+        <div class="icon"><i class="fa fa-search w3-large"></i></div>
+        <input type="text" class="search_field" id="" name="" placeholder="Search" />
+        <div class="buts" onclick="theCall(this.previousElementSibling.value);"><i class="fa fa-arrow-right w3-large"></i></div>
+    </div>
+</header>
+
+    <article id="article">
+    </article>
+
+<footer>
+    <div id="close_btn"><i class="fa fa-close" onclick="hidePlayer()"></i></div>
+    <div id="controls">
+        <div><i class="fa fa-play" id="control_play" onclick="playSong(this, event)"></i></div>
+        <div class="seek_box" style="width: 100%;">
+            <div id="clicker"></div>
+            <div id="bar" onclick="seek(this, event)"><div id="bar_pro"></div></div>
+        </div>
+        <div style="display: flex; flex-wrap: nowrap"><div id="curr_time">0:00</div> / <div id="duration">3:44</div></div>
+        <div><i class="fa fa-volume-up s2" onclick="muteSong(this, event)"></i></div>
+        <div class="volume_box" style="width: 100px;">
+            <div id="v_clicker"></div>
+            <div id="v_bar" onclick="volumeChange(this, this.firstElementChild, event)">
+                <div id="v_bar_pro"></div>
+            </div>
+        </div>
+    </div>
+    <audio id="audio" onplay="alert('Thank you King Eternal')">
+        <source src="contents/Simi%20-%20Joromi.mp3" type="audio/mpeg">
+    </audio>
+</footer>
+</body>
+</html>
+<script src="../biggerThan.js"></script>
