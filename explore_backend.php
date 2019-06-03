@@ -5,9 +5,9 @@
  * Date: 11/10/2017
  */
 
-include '../function.php';
+include 'functions/function.php';
 
-include '../conn.php';
+include 'functions/conn.php';
 
 $start = $_GET['start'];
 $limit = $_COOKIE['p_n_o_e'];
