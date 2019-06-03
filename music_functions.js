@@ -3,6 +3,7 @@
  * Created on 10/11/2017.
  */
 var play = false;
+var player = document.getElementById('player');
 var m_play_btn;
 var timer;
 var timeInterval;

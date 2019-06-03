@@ -6,7 +6,7 @@
  * Time: 3:48 PM
  */
 session_start();
-include '../conn.php';
+include 'functions/conn.php';
 if(isset($_GET['email'])) {
 
     $email = $_GET['email'];

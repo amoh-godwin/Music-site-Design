@@ -1,7 +1,7 @@
 <?php
 session_start();
-include '../conn.php';
-include '../function.php';
+include 'functions/conn.php';
+include 'functions/function.php';
 if(isset($_POST['pass'])) {
 
     $user_username = base64_decode($_COOKIE['user']);

@@ -5,9 +5,9 @@
  * Date: 10/11/2017
  * Time: 5:02 PM
  */
-include '../function.php';
+include 'functions/function.php';
 
-include '../conn.php';
+include 'functions/conn.php';
 $upload_time = time();
 $song = $_POST['song'];
 $artist = $_POST['artist'];

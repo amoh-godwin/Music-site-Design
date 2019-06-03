@@ -5,8 +5,8 @@
  * Date: 10/11/2017
  * Time: 7:08 PM
  */
-include '../conn.php';
-include '../function.php';
+include 'functions/conn.php';
+include 'functions/function.php';
 ?>
 
 <!DOCTYPE html>
@@ -14,9 +14,9 @@ include '../function.php';
 <head>
     <meta charset="UTF-8">
     <title>Thank you Heavenly Father</title>
-    <link href="../../youthalive/css/w3.css" rel="stylesheet" />
-    <link href="../../youthalive/css/responsive.css" rel="stylesheet" />
-    <link href="../../youthalive/fa/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/w3.css" rel="stylesheet" />
+    <link href="css/responsive.css" rel="stylesheet" />
+    <link href="fa/css/font-awesome.min.css" rel="stylesheet" />
     <style>
         nav {
             display: flex;
@@ -66,7 +66,7 @@ include '../function.php';
                     echo '<meta name="keywords" content="'.$tags.'"/>
                         <div class="third w3-padding-large"><div class="w3-card-4" style="height: auto;">
                 <div style="width: 100%; height: 200px;">
-                    <img src="../images/21568704_895447720606432_3201380884846477312_n.jpg" width="100%" height="100%" style="" />
+                    <img src="images/21568704_895447720606432_3201380884846477312_n.jpg" width="100%" height="100%" style="" />
                 </div>
                 <div style=" height: 100px; overflow: hidden;">
                     <div class="w3-padding-small" style="display: flex; flex-wrap: wrap; width: 100%;">

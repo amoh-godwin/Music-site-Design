@@ -4,8 +4,8 @@
  * User: CHARITY PRODUCTIONS
  * Date: 11/8/2017
  */
-include '../function.php';
-include '../conn.php';
+include 'functions/function.php';
+include 'functions/conn.php';
 
 $song_list;
 $title;
